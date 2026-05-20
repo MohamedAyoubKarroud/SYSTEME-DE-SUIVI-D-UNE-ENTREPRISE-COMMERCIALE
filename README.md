@@ -13,22 +13,63 @@ Mohamed Ayman - Développeur : Implémentation des APIs
 ## Layout
 
 ```
-SSEC/
-    README.md
-    .gitignore
-    /docs
-├── backend/                 PHP REST API + MySQL + JWT
-│   ├── api/auth/login.php   POST login → JWT
-│   ├── config/              DB + app config
-│   ├── helpers/             JWT, HTTP/CORS, auth middleware
-│   ├── sql/schema.sql       MySQL DDL (employee, client, commande, …)
-│   └── .env.example
-└── frontend/                React (Vite) + react-router-dom + Chart.js
-    ├── src/router/          Route table + role-based ProtectedRoute
-    ├── src/pages/           Login + Dashboards (Direction/Employé/Admin IT)
-    ├── src/components/      DashboardLayout, Sidebar, KPI/Chart placeholders
-    ├── src/context/         AuthContext (JWT in localStorage)
-    └── src/api/client.js    fetch wrapper, attaches Bearer token
+SSEC
+├─ backend
+│  ├─ api
+│  │  ├─ auth
+│  │  │  └─ login.php
+│  │  └─ employees
+│  │     └─ list.php
+│  ├─ config
+│  │  ├─ config.php
+│  │  └─ database.php
+│  ├─ helpers
+│  │  ├─ auth_middleware.php
+│  │  ├─ http.php
+│  │  └─ jwt.php
+│  └─ sql
+│     └─ schema.sql
+├─ frontend
+│  ├─ index.html
+│  ├─ package-lock.json
+│  ├─ package.json
+│  ├─ src
+│  │  ├─ api
+│  │  │  └─ client.js
+│  │  ├─ App.jsx
+│  │  ├─ components
+│  │  │  ├─ Chart.jsx
+│  │  │  ├─ DashboardLayout.jsx
+│  │  │  ├─ DataTable.jsx
+│  │  │  ├─ icons.jsx
+│  │  │  ├─ Sidebar.jsx
+│  │  │  ├─ Skeleton.jsx
+│  │  │  ├─ StatCard.jsx
+│  │  │  ├─ StatusBadge.jsx
+│  │  │  └─ Toast.jsx
+│  │  ├─ context
+│  │  │  └─ AuthContext.jsx
+│  │  ├─ main.jsx
+│  │  ├─ pages
+│  │  │  ├─ DashboardAdmin.jsx
+│  │  │  ├─ DashboardDirection.jsx
+│  │  │  ├─ DashboardEmploye.jsx
+│  │  │  ├─ Landing.css
+│  │  │  ├─ Landing.jsx
+│  │  │  ├─ Login.jsx
+│  │  │  └─ NotFound.jsx
+│  │  ├─ router
+│  │  │  ├─ AppRouter.jsx
+│  │  │  └─ ProtectedRoute.jsx
+│  │  └─ styles
+│  │     └─ global.css
+│  └─ vite.config.js
+└─ README.md
+├─ docs
+    ├─ fiche_projet - SSEC.pdf
+    ├─ 1_SSEC_S2.pdf
+    └─ Livrable_3_1.pdf
+└─ .gitignore
 ```
 ## Technologies utilisées
 
