@@ -10,7 +10,7 @@ $cfg = require __DIR__ . '/../../config/config.php';
 applyCors($cfg['cors']['allowed_origins']);
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-    jsonResponse(405, ['error' => 'method_not_allowed']);
+    jsonResponse(405, ['error' => 'method_not_allowed']); 
 }
 
 $input    = readJsonBody();
