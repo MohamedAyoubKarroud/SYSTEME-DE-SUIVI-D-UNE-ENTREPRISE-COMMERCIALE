@@ -27,3 +27,4 @@ export const authApi = {
 export const employeesApi = {
   list: (token) => apiFetch('/employees/list.php', { token }),
 };
+

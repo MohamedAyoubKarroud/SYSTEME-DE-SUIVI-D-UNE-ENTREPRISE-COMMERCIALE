@@ -1,0 +1,236 @@
+/* =========================================================================
+   Landing page — scoped under .landing-root so it never leaks into the
+   rest of the app. Dark, full-bleed, 3D-friendly.
+   ========================================================================= */
+
+.landing-root {
+  --l-fg:      #f5f5f7;
+  --l-fg-dim:  rgba(245, 245, 247, 0.78);
+  --l-fg-soft: rgba(245, 245, 247, 0.92);
+  --l-bg-1:    #07070d;
+  --l-bg-2:    #0d0d1a;
+  --l-accent:  #8cd6ff;
+
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  color: var(--l-fg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+
+  /* Calmer background: single very subtle radial fall-off, no chromatic glow */
+  background:
+    radial-gradient(80vmax 70vmax at 50% 40%, rgba(60, 80, 140, 0.10) 0%, transparent 65%),
+    linear-gradient(180deg, var(--l-bg-2) 0%, var(--l-bg-1) 70%);
+}
+
+/* Fixed canvas in the background of the Landing view only */
+.landing-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+/* Subtle film grain overlay — kills banding on the gradient and adds texture */
+.landing-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* Top bar */
+.landing-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 6vw;
+  z-index: 5;
+  pointer-events: none;
+}
+.landing-nav > * { pointer-events: auto; }
+
+.landing-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-size: 0.95rem;
+}
+.landing-brand-mark {
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  background: #ffffff;
+  display: grid; place-items: center;
+  color: #0a0a14; font-size: 0.72rem; font-weight: 700;
+}
+
+.landing-cta {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: var(--l-fg);
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+  text-decoration: none;
+}
+.landing-cta:hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.28);
+  transform: translateY(-1px);
+}
+
+/* Sections layer above the fixed canvas + grain */
+.landing-main {
+  position: relative;
+  z-index: 2;
+}
+
+.landing-section {
+  min-height: 100vh;
+  padding: 14vh 8vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.landing-section--left   { align-items: flex-start; text-align: left; }
+.landing-section--right  { align-items: flex-end;   text-align: right; }
+.landing-section--center { align-items: center;     text-align: center; }
+
+.landing-eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--l-accent);
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+  font-feature-settings: "tnum" 1;
+}
+
+.landing-section h1,
+.landing-section h2 {
+  font-size: clamp(2.6rem, 6.2vw, 5.2rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  margin: 0 0 1.5rem;
+  max-width: 16ch;
+  color: #ffffff;
+  /* Tiny dark shadow gives the text a readable edge against the bloom */
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+  will-change: transform, opacity;
+}
+.landing-section h1 em,
+.landing-section h2 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--l-accent);
+}
+
+.landing-section p {
+  font-size: clamp(1.02rem, 1.25vw, 1.18rem);
+  line-height: 1.7;
+  color: var(--l-fg-dim);
+  max-width: 44ch;
+  margin: 0;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+  will-change: transform, opacity;
+}
+
+.landing-section .actions {
+  margin-top: 2.2rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.landing-btn-primary {
+  appearance: none;
+  border: 0;
+  background: #ffffff;
+  color: #0a0a14;
+  padding: 0.95rem 1.7rem;
+  border-radius: 999px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.landing-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+.landing-btn-primary span {
+  transition: transform 0.25s ease;
+}
+.landing-btn-primary:hover span {
+  transform: translateX(3px);
+}
+
+/* Scroll progress dots */
+.landing-dots {
+  position: fixed;
+  right: 1.75rem; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 0.85rem;
+  z-index: 4;
+}
+.landing-dots span {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.landing-dots span.is-active {
+  background: #ffffff;
+  transform: scale(1.4);
+}
+
+/* Mobile */
+@media (max-width: 720px) {
+  .landing-nav { padding: 1rem 5vw; }
+  .landing-section {
+    padding: 14vh 6vw;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .landing-section--right,
+  .landing-section--center {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .landing-dots { display: none; }
+}
+
+/* Reduced motion: hide canvas + grain, keep static gradient */
+@media (prefers-reduced-motion: reduce) {
+  .landing-canvas, .landing-grain { display: none; }
+}
+
+/* Lenis needs the body to scroll freely; package's CSS sets html.lenis,
+   but we also want native-feeling fallbacks if Lenis is destroyed. */
+html.lenis { scroll-behavior: auto; }
